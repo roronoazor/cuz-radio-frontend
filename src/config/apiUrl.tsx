@@ -1,0 +1,9 @@
+export const BASE_URL: string = "https://cuz-radio-api.onrender.com";
+export const SIGNUP_URL: string = `${BASE_URL}/auth/signup`;
+export const LOGIN_URL: string = `${BASE_URL}/auth/login`;
+export const GET_ADMIN_STORE: string = `${BASE_URL}/admin_store/items`;
+export const CREATE_ADMIN_STORE: string = `${BASE_URL}/admin_store/items`;
+export const GET_PRIMARY_STORE: string = `${BASE_URL}/primary_store/items`;
+export const CREATE_PRIMARY_STORE: string = `${BASE_URL}/primary_store/items`;
+export const GET_SECONDARY_STORE: string = `${BASE_URL}/secondary_store/items`;
+export const CREATE_SECONDARY_STORE: string = `${BASE_URL}/secondary_store/items`;
