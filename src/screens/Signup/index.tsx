@@ -64,7 +64,7 @@ const Signup: React.FC = () => {
       // Update query cache
       queryClient.setQueryData(["user"], data);
       // Navigate to dashboard
-      navigate("/dashboard");
+      navigate("/");
     },
     onError: (error: Error) => {
       let errorMessage = "An error occurred during login";

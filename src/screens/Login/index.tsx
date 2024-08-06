@@ -53,7 +53,7 @@ const Login: React.FC = () => {
       queryClient.setQueryData(["user"], data);
       queryClient.invalidateQueries({ queryKey: ["userProfile"] });
       // Navigate to dashboard
-      navigate("/dashboard");
+      navigate("/");
     },
     onError: (error: unknown) => {
       let errorMessage = "An error occurred during login";

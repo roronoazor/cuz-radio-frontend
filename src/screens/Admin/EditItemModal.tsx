@@ -84,7 +84,7 @@ const EditItemModal: React.FC<EditItemModalProps> = ({
   const editMutation = useMutation({
     mutationFn: editItem,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["items", page] });
+      queryClient.invalidateQueries({ queryKey: ["adminItems", page] });
       setSnackbarMessage("Item updated successfully!");
       setSnackbarSeverity("success");
       setSnackbarOpen(true);

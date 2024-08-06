@@ -8,6 +8,7 @@ import {
   Button,
   Snackbar,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -70,7 +71,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({
   const createMutation = useMutation({
     mutationFn: createItem,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["items", page] });
+      queryClient.invalidateQueries({ queryKey: ["secondaryItems", page] });
       setSnackbarMessage("Item created successfully!");
       setSnackbarSeverity("success");
       setSnackbarOpen(true);
@@ -144,6 +145,11 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({
       <Dialog open={open} onClose={onClose}>
         <form onSubmit={handleSubmit}>
           <DialogTitle>Create New Item</DialogTitle>
+          <Typography paddingX={3} variant="subtitle2">
+            Please note that if your logged in as an admin user, and create an
+            item via this route, it will show up in the admin store not the
+            secondary store.
+          </Typography>
           <DialogContent>
             <TextField
               autoFocus

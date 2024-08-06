@@ -70,7 +70,7 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({
   const createMutation = useMutation({
     mutationFn: createItem,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["items", page] });
+      queryClient.invalidateQueries({ queryKey: ["adminItems", page] });
       setSnackbarMessage("Item created successfully!");
       setSnackbarSeverity("success");
       setSnackbarOpen(true);

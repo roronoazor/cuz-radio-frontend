@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -18,15 +18,46 @@ import GroupIcon from "@mui/icons-material/Group";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import LockIcon from "@mui/icons-material/Lock";
 
+interface User {
+  username: string;
+  role: string;
+}
+
 const Dashboard: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const userData = sessionStorage.getItem("user");
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      setUser({
+        username: parsedUser.username,
+        role: parsedUser.role,
+      });
+    }
+  }, []);
+
+  const getWelcomeMessage = () => {
+    if (!user) return "";
+    switch (user.role.toUpperCase()) {
+      case "ADMIN":
+        return `You are currently logged in as an Admin user. This grants you full access to all features and route sets in the application.`;
+      case "PRIMARY":
+        return `You are currently logged in as a Primary user. This grants you access to Primary routes and features.`;
+      case "SECONDARY":
+        return `You are currently logged in as a Secondary user. This grants you access to Secondary routes and features.`;
+      default:
+        return `You are currently logged in. Your access level is based on your user role.`;
+    }
+  };
+
   return (
     <Box sx={{ flexGrow: 1, p: 3 }}>
       <Typography variant="h4" gutterBottom>
-        Welcome to CuzRadio Admin Dashboard
+        Welcome to CuzRadio Dashboard, {user?.username}
       </Typography>
       <Typography variant="subtitle1" paragraph>
-        You are currently logged in as an Admin user. This grants you full
-        access to all features and route sets in the application.
+        {getWelcomeMessage()}
       </Typography>
 
       <Grid container spacing={3}>
@@ -100,8 +131,18 @@ const Dashboard: React.FC = () => {
                       Core functionalities accessible to all users.
                     </Typography>
                     <Box sx={{ mt: 2, display: "flex", alignItems: "center" }}>
-                      <LockOpenIcon color="primary" sx={{ mr: 1 }} />
-                      <Typography variant="body2">Accessible to you</Typography>
+                      {user?.role.toUpperCase() === "ADMIN" ||
+                      user?.role.toUpperCase() === "PRIMARY" ? (
+                        <LockOpenIcon color="primary" sx={{ mr: 1 }} />
+                      ) : (
+                        <LockIcon color="disabled" sx={{ mr: 1 }} />
+                      )}
+                      <Typography variant="body2">
+                        {user?.role.toUpperCase() === "ADMIN" ||
+                        user?.role.toUpperCase() === "PRIMARY"
+                          ? "Accessible to you"
+                          : "Not accessible to you"}
+                      </Typography>
                     </Box>
                   </CardContent>
                 </Card>
@@ -116,8 +157,18 @@ const Dashboard: React.FC = () => {
                       Advanced features for secondary and admin users.
                     </Typography>
                     <Box sx={{ mt: 2, display: "flex", alignItems: "center" }}>
-                      <LockOpenIcon color="secondary" sx={{ mr: 1 }} />
-                      <Typography variant="body2">Accessible to you</Typography>
+                      {user?.role.toUpperCase() === "ADMIN" ||
+                      user?.role.toUpperCase() === "SECONDARY" ? (
+                        <LockOpenIcon color="secondary" sx={{ mr: 1 }} />
+                      ) : (
+                        <LockIcon color="disabled" sx={{ mr: 1 }} />
+                      )}
+                      <Typography variant="body2">
+                        {user?.role.toUpperCase() === "ADMIN" ||
+                        user?.role.toUpperCase() === "SECONDARY"
+                          ? "Accessible to you"
+                          : "Not accessible to you"}
+                      </Typography>
                     </Box>
                   </CardContent>
                 </Card>
@@ -132,8 +183,16 @@ const Dashboard: React.FC = () => {
                       Exclusive features for system administration.
                     </Typography>
                     <Box sx={{ mt: 2, display: "flex", alignItems: "center" }}>
-                      <LockOpenIcon color="error" sx={{ mr: 1 }} />
-                      <Typography variant="body2">Accessible to you</Typography>
+                      {user?.role.toUpperCase() === "ADMIN" ? (
+                        <LockOpenIcon color="error" sx={{ mr: 1 }} />
+                      ) : (
+                        <LockIcon color="disabled" sx={{ mr: 1 }} />
+                      )}
+                      <Typography variant="body2">
+                        {user?.role.toUpperCase() === "ADMIN"
+                          ? "Accessible to you"
+                          : "Not accessible to you"}
+                      </Typography>
                     </Box>
                   </CardContent>
                 </Card>
