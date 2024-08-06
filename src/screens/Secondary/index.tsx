@@ -208,7 +208,7 @@ const ItemList: React.FC = () => {
         alignItems="center"
         mb={2}
       >
-        <Typography variant="h4">
+        <Typography variant="h6">
           Secondary Items (Only Admins, Secondary Users will be able to use this
           page fully)
         </Typography>
